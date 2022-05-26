@@ -1,0 +1,65 @@
+<form [formGroup]="leaveForm" novalidate (ngSubmit)="onSubmit()">
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>{{ 'i18n.LeaveCreateFormDialogComponent.title' | translate }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+
+      <div class="row">
+        <div class="col">
+          <app-user-autocomplete
+            [mandatory]="true"
+            (selectedUsers)="updateUser($event)"></app-user-autocomplete>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <app-date-range-filter
+            (selectedDate)="updateDateRangeFilter($event)"
+            [minDate]="minDate" [maxDate]="maxDate"
+            [mandatory]="true"></app-date-range-filter>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-slide-toggle formControlName="fullDayAtStart">{{ 'i18n.LeaveCreateFormDialogComponent.fullDayAtStart' | translate }}</mat-slide-toggle>
+        </div>
+        <div class="col">
+          <mat-slide-toggle formControlName="fullDayAtEnd">{{ 'i18n.LeaveCreateFormDialogComponent.fullDayAtEnd' | translate }}</mat-slide-toggle>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-select placeholder="{{ 'i18n.LeaveCreateFormDialogComponent.leaveType' | translate }}"
+                        formControlName="leaveType" required>
+              <mat-option *ngFor="let leaveType of leaveTypes" [value]="leaveType">
+                {{ 'i18n.LeaveType.' + leaveType | translate }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="leaveForm.controls['leaveType'].hasError('required')">
+              {{ 'i18n.LeaveCreateFormDialogComponent.leaveTypeRequired' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>{{ 'i18n.LeaveCreateFormDialogComponent.comment' | translate }}</mat-label>
+            <textarea matInput cdkTextareaAutosize formControlName="comment"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!leaveForm.valid">
+        {{ 'i18n.LeaveCreateFormDialogComponent.submit' | translate }}</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

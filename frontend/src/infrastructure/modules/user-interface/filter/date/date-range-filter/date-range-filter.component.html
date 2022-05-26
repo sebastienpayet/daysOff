@@ -1,0 +1,13 @@
+<mat-form-field appearance="fill" class="full-width">
+  <mat-label>{{ 'i18n.DateRangeFilterComponent.title' | translate }}</mat-label>
+  <mat-date-range-input [formGroup]="rangeForm" [rangePicker]="picker" [min]="minDate" [max]="maxDate">
+    <input matStartDate formControlName="start" placeholder="{{ 'i18n.DateRangeFilterComponent.startDate' | translate }}">
+    <input matEndDate formControlName="end" placeholder="{{ 'i18n.DateRangeFilterComponent.endDate' | translate }}">
+  </mat-date-range-input>
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-date-range-picker (closed)="emitRange()" #picker></mat-date-range-picker>
+
+  <mat-error *ngIf="rangeForm.controls.start.hasError('matStartDateInvalid')">{{ 'i18n.DateRangeFilterComponent.invalidStartDate' | translate }}</mat-error>
+  <mat-error *ngIf="rangeForm.controls.end.hasError('matEndDateInvalid')">{{ 'i18n.DateRangeFilterComponent.invalidEndDate' | translate }}</mat-error>
+  <mat-error *ngIf="mandatory && !rangeForm.valid">{{ 'i18n.DateRangeFilterComponent.mandatory' | translate }}</mat-error>
+</mat-form-field>

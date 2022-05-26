@@ -1,0 +1,51 @@
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
+
+.container {
+  padding-top: 2em;
+  background: url("src/application/assets/login_bg.svg") no-repeat top center fixed;
+  -webkit-background-size: contain;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: contain;
+  display: flex;
+  flex-flow: column;
+  height: 97%;
+
+}
+
+.container > .mat-card {
+  max-width: 400px;
+  margin: 0 auto 0;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.90);
+}
+
+.mat-form-field {
+  display: block;
+}
+
+.placeHolder {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 400px;
+}
+
+.placeHolderIcon {
+  font-size: 5em;
+  width: auto;
+  margin: 0 auto;
+  color: #45CAD1;
+}
+
+h1 {
+  font-family: 'Pacifico', cursive;
+  font-size: 4em;
+  margin: 0 auto 0.75em;
+  color: #79bbbf;
+}
+
+h2 {
+  color: rgba(127, 127, 127, 1);
+  font-family: 'Pacifico', cursive;
+}

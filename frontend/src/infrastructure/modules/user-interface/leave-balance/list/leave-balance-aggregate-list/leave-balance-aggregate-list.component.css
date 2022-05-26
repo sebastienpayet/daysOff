@@ -1,0 +1,14 @@
+.full-width-table {
+  width: 100%;
+}
+
+.action-cell {
+  width:40px
+}
+
+.cell-comment {
+  max-width: 200px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

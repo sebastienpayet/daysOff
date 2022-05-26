@@ -1,0 +1,36 @@
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mat-drawer-inner-container{ overflow: hidden !important; }
+
+.custom-dialog-container .mat-dialog-container {
+  padding: 0;
+}
+
+.positive {
+  color: forestgreen;
+}
+
+.negative {
+  color: red;
+  font-weight: bold;
+}
+
+.mat-card-actions {
+  text-align: end;
+}
+
+.public-holiday {
+  background: orange;
+  border-radius: 100%;
+}
+
+.snack-error{
+  background-color: red;
+  color: white;
+}
+
+.snack-ok{
+  background-color: green;
+  color: white;
+}

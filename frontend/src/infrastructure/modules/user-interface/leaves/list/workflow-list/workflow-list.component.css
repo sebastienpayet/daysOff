@@ -1,0 +1,23 @@
+.modified-mc-content {
+  height: 40px;
+}
+.mat-expansion-panel {
+  width: 90%;
+}
+
+.mat-expansion-panel-header {
+  height: 40px;
+}
+
+.modified-mc-content > mat-expansion-panel {
+  z-index: 1;
+}
+
+.modified-mc-content > mat-expansion-panel > .mat-expansion-panel-content {
+  max-height: 50vh;
+  overflow: auto;
+}
+
+.modified-mc-content mat-chip {
+  height: auto
+}

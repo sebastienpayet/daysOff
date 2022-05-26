@@ -1,0 +1,7 @@
+spring:
+  data:
+    mongodb:
+      database: daysOff
+      uri: mongodb://localhost
+  profiles:
+    active: mongo

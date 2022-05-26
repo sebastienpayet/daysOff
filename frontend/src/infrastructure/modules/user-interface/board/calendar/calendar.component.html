@@ -1,0 +1,39 @@
+<ng-container *ngIf="selectedLeaves$ | async as selectedLeaves; else elseBlock">
+  <div *ngIf="selectedLeaves.length > 0; else elseBlock">
+    <mat-drawer-container class="container" autosize>
+      <mat-drawer #drawer class="sidenav" mode="side">
+        <app-side-filters *appRefreshViewOnChange="actions$ | async" class="sideFilters"></app-side-filters>
+      </mat-drawer>
+
+      <div style="position: absolute; z-index: 2">
+        <button type="button" mat-button (click)="toggle()">
+          <mat-icon>{{sideIcon}}</mat-icon>
+        </button>
+      </div>
+
+        <apx-chart id="chart" #chart *ngIf="chartOptions$ | async as chartOptions"
+                   [series]="chartOptions.series"
+                   [chart]="chartOptions.chart"
+                   [plotOptions]="chartOptions.plotOptions"
+                   [dataLabels]="chartOptions.dataLabels"
+                   [xaxis]="chartOptions.xaxis"
+                   [yaxis]="chartOptions.yaxis"
+                   [grid]="chartOptions.grid"
+                   [legend]="chartOptions.legend"
+                   [noData]="chartOptions.noData"
+        ></apx-chart>
+    </mat-drawer-container>
+  </div>
+</ng-container>
+
+<ng-template #elseBlock>
+  <div class="placeHolder">
+    <div>
+      <mat-icon class="placeHolderIcon">work_outline</mat-icon>
+    </div>
+    <div>
+      <h1>Oops !</h1>
+      <h2>{{'i18n.CalendarComponent.noData' | translate}}</h2>
+    </div>
+  </div>
+</ng-template>

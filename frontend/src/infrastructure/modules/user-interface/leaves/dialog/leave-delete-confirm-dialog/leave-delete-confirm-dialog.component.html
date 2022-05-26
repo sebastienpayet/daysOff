@@ -1,0 +1,11 @@
+<div mat-dialog-content>
+  {{ 'i18n.LeaveDeleteConfirmDialogComponent.confirm' | translate }}
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="abort()">
+    {{ 'i18n.LeaveDeleteConfirmDialogComponent.no' | translate }}
+  </button>
+  <button mat-button (click)="confirm()" cdkFocusInitial>
+    {{ 'i18n.LeaveDeleteConfirmDialogComponent.yes' | translate }}
+  </button>
+</div>

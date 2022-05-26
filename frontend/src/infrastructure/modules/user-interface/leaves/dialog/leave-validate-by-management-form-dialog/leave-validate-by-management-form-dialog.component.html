@@ -1,0 +1,99 @@
+<form [formGroup]="leaveForm" novalidate (ngSubmit)="onSubmit()">
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>{{ 'i18n.LeaveValidateByManagementFormDialogComponent.title' | translate }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>{{ 'i18n.LeaveType.ANNUAL' | translate }}</mat-label>
+            <input matInput type="number" step="0.5" [min]="0" formControlName="annual"
+                   (keyup)="computeRemaining('annual')"
+                   (change)="computeRemaining('annual')"
+            >
+            <mat-error *ngIf="leaveForm.controls['annual'].invalid">
+              {{ 'i18n.LeaveValidateByManagementFormDialogComponent.fieldRequired' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>{{ 'i18n.LeaveType.SPECIAL' | translate }}</mat-label>
+            <input matInput type="number" step="0.5" [min]="0" formControlName="special"
+                   (keyup)="computeRemaining('special')"
+                   (change)="computeRemaining('special')"
+            >
+            <mat-error *ngIf="leaveForm.controls['special'].invalid">
+              {{ 'i18n.LeaveValidateByManagementFormDialogComponent.fieldRequired' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>{{ 'i18n.LeaveType.WORKING_TIME_REDUCTION' | translate }}</mat-label>
+            <input matInput type="number" step="0.5" [min]="0" formControlName="workingTimeReduction"
+                   (keyup)="computeRemaining('workingTimeReduction')"
+                   (change)="computeRemaining('workingTimeReduction')"
+            >
+            <mat-error *ngIf="leaveForm.controls['workingTimeReduction'].invalid">
+              {{ 'i18n.LeaveValidateByManagementFormDialogComponent.fieldRequired' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>{{ 'i18n.LeaveType.RECOVERY' | translate }}</mat-label>
+            <input matInput type="number" step="0.5" [min]="0" formControlName="recovery"
+                   (keyup)="computeRemaining('recovery')"
+                   (change)="computeRemaining('recovery')"
+            >
+            <mat-error *ngIf="leaveForm.controls['recovery'].invalid">
+              {{ 'i18n.LeaveValidateByManagementFormDialogComponent.fieldRequired' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>{{ 'i18n.LeaveType.TIME_SAVING_ACCOUNT' | translate }}</mat-label>
+            <input matInput type="number" step="0.5" [min]="0" formControlName="timeSavingAccount"
+                   (keyup)="computeRemaining('timeSavingAccount')"
+                   (change)="computeRemaining('timeSavingAccount')"
+            >
+            <mat-error *ngIf="leaveForm.controls['timeSavingAccount'].invalid">
+              {{ 'i18n.LeaveValidateByManagementFormDialogComponent.fieldRequired' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>{{ 'i18n.LeaveValidateByManagementFormDialogComponent.comment' | translate }}</mat-label>
+            <textarea matInput cdkTextareaAutosize formControlName="comment" maxlength="150"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col" [className]="(remainingToDispatch === 0) ? 'positive' : 'negative'">
+          {{ 'i18n.LeaveValidateByManagementFormDialogComponent.daysRemain' | translate }} : {{ remainingToDispatch }}
+        </div>
+      </div>
+
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!leaveForm.valid || remainingToDispatch !== 0">
+        {{ 'i18n.LeaveValidateByManagementFormDialogComponent.submit' | translate }}
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</form>

@@ -1,0 +1,28 @@
+<mat-form-field class="example-chip-list" *ngIf="users$ | async">
+  <mat-label>{{ 'i18n.UserAutocompleteComponent.user' | translate }}</mat-label>
+  <mat-chip-list #chipList aria-label="User selection">
+    <mat-chip
+      *ngFor="let userChip of usersChips | keyvalue"
+      [selectable]="selectable"
+      [removable]="removable"
+      (removed)="remove(userChip.value)">
+      {{userChip.value | user}}
+      <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+    </mat-chip>
+    <input
+      placeholder="{{ 'i18n.UserAutocompleteComponent.searchUser' | translate }}"
+      #userInput
+      [formControl]="usersCtrl"
+      [matAutocomplete]="auto"
+      [matChipInputFor]="chipList"
+      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+      (matChipInputTokenEnd)="add($event)"
+    >
+    <mat-error *ngIf="mandatory && usersChips.size === 0">{{ 'i18n.UserAutocompleteComponent.userRequired' | translate }}</mat-error>
+  </mat-chip-list>
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+    <mat-option *ngFor="let user of filteredUsers | async" [value]="user.id">
+      {{user | user}}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

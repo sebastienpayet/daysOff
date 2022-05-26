@@ -1,0 +1,16 @@
+dependencies {
+}
+
+def profiles = "mongo"
+
+springBoot {
+    buildInfo()
+}
+
+bootRun {
+    args = ["--spring.profiles.active=" + profiles]
+}
+
+processResources {
+    inputs.property('springProfiles', profiles)
+}

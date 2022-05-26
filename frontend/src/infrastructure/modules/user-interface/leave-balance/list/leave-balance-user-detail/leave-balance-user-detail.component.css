@@ -1,0 +1,42 @@
+.detail-container {
+  position: relative;
+}
+
+.detail-container-table {
+  width: 100%;
+  position: relative;
+  min-height: 600px;
+  max-height: 600px;
+  overflow: auto;
+  margin: 20px;
+}
+
+tr.mat-footer-row {
+  font-weight: bold;
+}
+
+.mat-cell {
+  padding: 8px 8px 8px 0;
+}
+
+.no-data {
+  padding: 20px;
+}
+
+.leave-separator {
+  padding-left: 10px!important;
+  padding-right: 5px!important;
+  border-top: 2px solid midnightblue;
+  border-right: 0.5px solid grey;
+  border-left: 0.5px solid grey;
+}
+
+.normal-separator {
+  padding-left: 10px!important;
+  padding-right: 8px!important;
+  border: 0.5px solid grey;
+}
+
+.footer {
+  background-color: aliceblue;
+}

@@ -1,0 +1,102 @@
+<form [formGroup]="userForm" novalidate (ngSubmit)="onSubmit()" *ngIf="teams | async as teams">
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>{{ 'i18n.UserFormDialogComponent.userRecord' | translate }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="{{ 'i18n.User.firstName' | translate }}" formControlName="firstName" required>
+            <mat-error *ngIf="userForm.controls['firstName'].hasError('required')">
+              {{ 'i18n.UserFormDialogComponent.fieldRequired' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="{{ 'i18n.User.lastName' | translate }}" formControlName="lastName" required>
+            <mat-error *ngIf="userForm.controls['lastName'].hasError('required')">
+              {{ 'i18n.UserFormDialogComponent.fieldRequired' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width-input">
+            <input matInput placeholder="{{ 'i18n.User.email' | translate }}" formControlName="email" required>
+            <mat-error>
+              {{ 'i18n.UserFormDialogComponent.invalidEmail' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+          <div class="col">
+              <mat-slide-toggle formControlName="hasMinorChild">{{ 'i18n.User.hasMinorChild' | translate }}</mat-slide-toggle>
+          </div>
+
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-select placeholder="{{ 'i18n.UserFormDialogComponent.teams' | translate }}" formControlName="teams" multiple required>
+              <mat-option *ngFor="let team of teams" [value]="team.id">
+                {{ team.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="userForm.controls['teams'].hasError('required')">
+              {{ 'i18n.UserFormDialogComponent.fieldRequired' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-select placeholder="Role" formControlName="role" required>
+              <mat-option *ngFor="let role of roles" [value]="role">
+                {{ 'i18n.Role.' + role | translate }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="userForm.controls['role'].hasError('required')">
+              {{ 'i18n.UserFormDialogComponent.fieldRequired' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="data.updatedUser">
+        <div class="col">
+          <mat-checkbox (change)="switchRedefinePassword()">{{ 'i18n.UserFormDialogComponent.redefinePassword' | translate }}</mat-checkbox>
+          </div>
+      </div>
+
+      <div class="row" *ngIf="!data.updatedUser || redefinePassword">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput [type]="hide ? 'password' : 'text'" placeholder="Password"
+                   (change)="userForm.controls['confirmPassword'].updateValueAndValidity()" formControlName="password" required>
+            <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            <mat-error>
+              {{ 'i18n.UserFormDialogComponent.passwordRules' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput [type]="hide ? 'password' : 'text'" placeholder="{{ 'i18n.UserFormDialogComponent.passwordConfirmation' | translate }}" formControlName="confirmPassword" required>
+            <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            <mat-error>
+              {{ 'i18n.UserFormDialogComponent.notConfirmed' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!userForm.valid">
+        {{ 'i18n.UserFormDialogComponent.submit' | translate }}
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</form>

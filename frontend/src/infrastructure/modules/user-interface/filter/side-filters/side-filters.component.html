@@ -1,0 +1,8 @@
+<h1>{{ 'i18n.SideFiltersComponent.title' | translate }}</h1>
+<app-date-range-filter (selectedDate)="updateDateRangeFilter($event)"
+[startDate]="leaveFilter.dateRange.startDate" [endDate]="leaveFilter.dateRange.endDate"
+></app-date-range-filter>
+<app-user-autocomplete [multiSelection]="true" (selectedUsers)="updateUsersFilter($event)"></app-user-autocomplete>
+<app-service-autocomplete [multiSelection]="true" (selectedServices)="updateServicesFilter($event)"></app-service-autocomplete>
+<app-status-autocomplete [multiSelection]="true" (selectedStatus)="updateStatusFilter($event)"></app-status-autocomplete>
+

@@ -1,0 +1,24 @@
+package com.archeon.daysoff.infrastructure.controller.leave
+
+import com.archeon.daysoff.business.useCase.leave.createALeaveRequest.CreateALeaveRequestCommand
+import com.archeon.daysoff.business.useCase.leave.deleteALeaveRequest.DeleteALeaveRequestCommand
+import com.archeon.daysoff.business.useCase.leave.refuseALeaveRequest.RefuseALeaveRequestCommand
+import com.archeon.daysoff.business.useCase.leave.setLeaveRequestAsDraft.SetLeaveRequestAsDraftCommand
+import com.archeon.daysoff.business.useCase.leave.submitALeaveRequest.SubmitALeaveRequestCommand
+import com.archeon.daysoff.business.useCase.leave.updateALeaveRequest.UpdateALeaveRequestCommand
+import com.archeon.daysoff.business.useCase.leave.validateALeaveRequestByManagement.ValidateALeaveRequestByManagementCommand
+import com.archeon.daysoff.business.useCase.leave.validateALeaveRequestByService.ValidateALeaveRequestByServiceCommand
+import com.archeon.daysoff.infrastructure.resource.output.leave.LeaveOutput
+import org.springframework.web.bind.annotation.RequestBody
+
+interface LeaveApi {
+	fun createALeaveRequest(@RequestBody createALeaveRequestCommand: CreateALeaveRequestCommand): LeaveOutput
+	fun listLeaveRequests(): List<LeaveOutput>
+	fun submitALeaveRequest(@RequestBody submitALeaveRequestCommand: SubmitALeaveRequestCommand): LeaveOutput
+	fun validateALeaveRequestByService(@RequestBody validateALeaveRequestByServiceCommand: ValidateALeaveRequestByServiceCommand): LeaveOutput
+	fun validateALeaveRequestByManagement(@RequestBody validateALeaveRequestByManagementCommand: ValidateALeaveRequestByManagementCommand): LeaveOutput
+	fun refuseALeaveRequest(@RequestBody refuseALeaveRequestCommand: RefuseALeaveRequestCommand): LeaveOutput
+	fun deleteALeaveRequest(@RequestBody deleteALeaveRequestCommand: DeleteALeaveRequestCommand): LeaveOutput
+	fun updateALeaveRequest(@RequestBody updateALeaveRequestCommand: UpdateALeaveRequestCommand): LeaveOutput
+	fun setLeaveRequestAsDraft(@RequestBody setLeaveRequestAsDraftCommand: SetLeaveRequestAsDraftCommand): LeaveOutput
+}

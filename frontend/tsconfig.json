@@ -1,0 +1,44 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "tslib" : ["./node_modules/tslib/tslib.d.ts"],
+      "@configuration/*" : ["src/application/configuration/*"],
+      "@domain/*" : ["src/business/domain/*"],
+      "@business/*" : ["src/business/*"],
+      "@modules/*" : ["src/infrastructure/modules/*"],
+      "@services/*" : ["src/infrastructure/services/*"],
+      "@store/*" : ["src/infrastructure/store/*"],
+      "@assets/*" : ["src/application/assets/*"],
+      "@environments/*" : ["src/application/environments/*"],
+      "crypto": [
+        "./node_modules/crypto-js"
+      ]
+    },
+    "outDir": "./dist/out-tsc",
+    "forceConsistentCasingInFileNames": true,
+    "strict": false,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "es2020",
+    "lib": [
+      "es2018",
+      "dom"
+    ]
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  }
+}

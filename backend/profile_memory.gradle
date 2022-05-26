@@ -1,0 +1,16 @@
+dependencies {
+}
+
+def profiles = "memory"
+
+springBoot {
+    buildInfo()
+}
+
+bootRun {
+    args = ["--spring.profiles.active=" + profiles]
+}
+
+processResources {
+    inputs.property('springProfiles', profiles)
+}

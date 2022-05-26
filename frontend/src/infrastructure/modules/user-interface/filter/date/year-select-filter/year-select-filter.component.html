@@ -1,0 +1,14 @@
+<form [formGroup]="yearsSelectForm" novalidate>
+<div class="row">
+    <div class="col">
+        <mat-form-field appearance="fill" class="full-width">
+            <mat-label>{{ 'i18n.YearSelectFilterComponent.selectYear' | translate }}</mat-label>
+            <mat-select formControlName="yearsControl" (selectionChange)="selectYear($event)">
+                <ng-container *ngFor="let year of years">
+                    <mat-option [value]="year">{{ year }}</mat-option>
+                </ng-container>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</div>
+</form>

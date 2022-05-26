@@ -1,0 +1,90 @@
+<form [formGroup]="leaveBalanceForm" novalidate (ngSubmit)="onSubmit()">
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>{{ 'i18n.LeaveBalanceCreateFormDialogComponent.createBalance' | translate }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+
+      <div class="row">
+        <div class="col">
+          <app-user-autocomplete
+            [mandatory]="true"
+            (selectedUsers)="updateUser($event)"></app-user-autocomplete>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <app-year-select-filter
+            [numberOfYears]="4"
+            [startingYear]="startingYear"
+            [defaultValue]="currentYear"
+            (selectedYear)="updateYear($event)"
+          ></app-year-select-filter>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-select placeholder="{{ 'i18n.LeaveBalanceCreateFormDialogComponent.balanceType' | translate }}" formControlName="leaveType" required>
+              <ng-container *ngFor="let leaveType of leaveTypes">
+                <mat-option  [value]="leaveType">
+                  {{ 'i18n.LeaveType.' + leaveType | translate }}
+                </mat-option>
+              </ng-container>
+            </mat-select>
+            <mat-error *ngIf="leaveBalanceForm.controls['leaveType'].hasError('required')">
+              {{ 'i18n.LeaveBalanceCreateFormDialogComponent.leaveTypeRequired' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-select placeholder="{{ 'i18n.LeaveBalanceCreateFormDialogComponent.debitOrCredit' | translate }}" formControlName="balanceType" required>
+              <ng-container *ngFor="let balanceType of balanceTypes">
+                <mat-option  [value]="balanceType">
+                  {{ 'i18n.BalanceType.' + balanceType | translate }}
+                </mat-option>
+              </ng-container>
+            </mat-select>
+            <mat-error *ngIf="leaveBalanceForm.controls['balanceType'].hasError('required')">
+              {{ 'i18n.LeaveBalanceCreateFormDialogComponent.balanceTypeRequired' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col" *ngIf="settings$ | async as settings">
+          <mat-form-field class="full-width">
+            <mat-label *ngIf="leaveBalanceForm.controls['leaveType'].value !== leaveType.RECOVERY ||
+            !settings.inputRecoveryInHours">{{ 'i18n.LeaveBalanceCreateFormDialogComponent.amountInDays' | translate }}</mat-label>
+            <mat-label *ngIf="leaveBalanceForm.controls['leaveType'].value === leaveType.RECOVERY &&
+            settings.inputRecoveryInHours">{{ 'i18n.LeaveBalanceCreateFormDialogComponent.amountInHours' | translate }}</mat-label>
+            <input matInput type="number" formControlName="amount">
+            <mat-error *ngIf="leaveBalanceForm.controls['amount'].invalid">
+              {{ 'i18n.LeaveBalanceCreateFormDialogComponent.amountRequired' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>{{ 'i18n.LeaveBalanceCreateFormDialogComponent.comment' | translate }}</mat-label>
+            <textarea matInput cdkTextareaAutosize formControlName="comment"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!leaveBalanceForm.valid">{{ 'i18n.LeaveBalanceCreateFormDialogComponent.submit' | translate }}</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

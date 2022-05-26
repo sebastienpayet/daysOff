@@ -1,0 +1,37 @@
+<ng-container *ngIf="isShowRowMenu()">
+  <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu" xPosition="before">
+    <button
+      *ngIf="isShowModifyButton()" mat-menu-item (click)="openUpdateDialog(leave)">
+      {{ 'i18n.LeaveListComponent.modify' | translate }}
+    </button>
+    <button
+      *ngIf="isShowSubmitButton()"
+      mat-menu-item (click)="openStatusUpdateDialog(leave.id, statuses.SUBMITTED)">
+      {{ 'i18n.LeaveListComponent.submit' | translate }}
+    </button>
+    <button *ngIf="isShowRefuseButton()"
+            mat-menu-item (click)="openStatusUpdateDialog(leave.id, statuses.REJECTED)">
+      {{ 'i18n.LeaveListComponent.refuse' | translate }}
+    </button>
+    <button
+      *ngIf="isShowDraftButton()"
+      mat-menu-item (click)="openStatusUpdateDialog(leave.id, statuses.DRAFT)">
+      {{ 'i18n.LeaveListComponent.backDraft' | translate }}
+    </button>
+    <button *ngIf="isShowServiceValidationButton()"
+            mat-menu-item (click)="openStatusUpdateDialog(leave.id, statuses.SERVICE_APPROVED)">
+      {{ 'i18n.LeaveListComponent.serviceValidation' | translate }}
+    </button>
+    <button *ngIf="isShowManagementValidationButton()"
+            mat-menu-item (click)="openValidateByManagementDialog(leave.id, leave.duration)">
+      {{ 'i18n.LeaveListComponent.managementValidation' | translate }}
+    </button>
+    <button mat-menu-item *ngIf="isShowArchiveButton()"
+            (click)="openDeleteDialog(leave.id)">
+      {{ 'i18n.LeaveListComponent.delete' | translate }}
+    </button>
+  </mat-menu>
+</ng-container>

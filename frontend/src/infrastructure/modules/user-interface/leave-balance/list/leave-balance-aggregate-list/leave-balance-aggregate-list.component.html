@@ -1,0 +1,136 @@
+<div class="mat-elevation-z8">
+  <div *appRefreshViewOnChange="balanceDatum$ | async as balanceDatum">
+    <table mat-table class="full-width-table" matSort aria-label="Elements">
+      <ng-container matColumnDef="header2">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-form-field>
+            <mat-label>{{'i18n.LeaveBalanceAggregateListComponent.filter' | translate}}</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia">
+          </mat-form-field>
+        </th>
+      </ng-container>
+
+      <ng-container matColumnDef="header3">
+        <th colspan="6" mat-header-cell *matHeaderCellDef>
+          <app-year-select-filter
+            [numberOfYears]="4"
+            [startingYear]="startingYear"
+            [defaultValue]="currentYear"
+            (selectedYear)="updateYear($event)"
+          ></app-year-select-filter>
+        </th>
+      </ng-container>
+
+      <ng-container matColumnDef="header4">
+        <th mat-header-cell *matHeaderCellDef class="action-cell">
+          <div *ngIf="authenticatedUser$ | async as user">
+            <button *ngIf="isShowAddBalanceButton(user)"
+                    mat-icon-button (click)="openCreateDialog()"
+                    matTooltip="{{'i18n.LeaveBalanceAggregateListComponent.createBalance' | translate}}">
+              <mat-icon>add_box</mat-icon>
+            </button>
+          </div>
+        </th>
+      </ng-container>
+
+      <!-- Name Column
+       'ANNUAL', 'SPECIAL', 'WORKING_TIME_REDUCTION', 'RECOVERY', 'TIME_SAVING_ACCOUNT', 'TOTAL'
+       -->
+      <ng-container matColumnDef="userStringFullName">
+        <th mat-header-cell *matHeaderCellDef
+            mat-sort-header>{{'i18n.LeaveBalanceAggregateListComponent.user' | translate}}</th>
+        <td mat-cell *matCellDef="let row">{{row.userStringFullName}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="annual">
+        <th mat-header-cell *matHeaderCellDef
+            mat-sort-header>{{'i18n.LeaveBalanceAggregateListComponent.annual' | translate}}</th>
+        <td mat-cell *matCellDef="let row">
+          <span [className]="(row.annual >= 0) ? 'positive' : 'negative'">{{row.annual | round2Decimal }}
+            {{'i18n.LeaveBalanceAggregateListComponent.days' | translate}}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="special">
+        <th mat-header-cell *matHeaderCellDef
+            mat-sort-header>{{'i18n.LeaveBalanceAggregateListComponent.special' | translate}}</th>
+        <td mat-cell *matCellDef="let row">
+          <span [className]="(row.special >= 0) ? 'positive' : 'negative'">{{row.special | round2Decimal }}
+            {{'i18n.LeaveBalanceAggregateListComponent.days' | translate}}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="working_time_reduction">
+        <th mat-header-cell *matHeaderCellDef
+            mat-sort-header>{{'i18n.LeaveBalanceAggregateListComponent.workingTimeReduction' | translate}}</th>
+        <td mat-cell *matCellDef="let row">
+          <span
+            [className]="(row.workingTimeReduction >= 0) ? 'positive' : 'negative'">{{row.workingTimeReduction | round2Decimal }}
+            {{'i18n.LeaveBalanceAggregateListComponent.days' | translate}}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="recovery">
+        <th mat-header-cell *matHeaderCellDef
+            mat-sort-header>{{'i18n.LeaveBalanceAggregateListComponent.recovery' | translate}}</th>
+        <td mat-cell *matCellDef="let row">
+          <span [className]="(row.recovery >= 0) ? 'positive' : 'negative'">
+            {{row.recovery | round2Decimal }} {{'i18n.LeaveBalanceAggregateListComponent.days' | translate}}
+            / {{row.recovery | hours | async }} {{'i18n.LeaveBalanceAggregateListComponent.hours' | translate}}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="time_saving_account">
+        <th mat-header-cell *matHeaderCellDef
+            mat-sort-header>{{'i18n.LeaveBalanceAggregateListComponent.timeSavingAccount' | translate}}</th>
+        <td mat-cell *matCellDef="let row">
+          <span
+            [className]="(row.timeSavingAccount >= 0) ? 'positive' : 'negative'">{{row.timeSavingAccount | round2Decimal }}
+            {{'i18n.LeaveBalanceAggregateListComponent.days' | translate}}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="total">
+        <th mat-header-cell *matHeaderCellDef
+            mat-sort-header>{{'i18n.LeaveBalanceAggregateListComponent.total' | translate}}
+          {{'i18n.LeaveBalanceAggregateListComponent.days' | translate}}
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <div class="cell-comment">
+            <span [className]="(row.total >= 0) ? 'positive' : 'negative'">{{row.total | round2Decimal }}
+              {{'i18n.LeaveBalanceAggregateListComponent.days' | translate}}
+            </span>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions" *appRefreshViewOnChange="modifyLeaveAction$ | async">
+        <th mat-header-cell *matHeaderCellDef class="action-cell"></th>
+        <td mat-cell *matCellDef="let row" class="action-cell">
+          <a mat-button matTooltip="{{'i18n.LeaveBalanceAggregateListComponent.showDetail' | translate}}"
+             *ngIf="selectedYear$ | async as selectedYear"
+             (click)="showDetail(row.userId, selectedYear)">
+            <mat-icon>zoom_in</mat-icon>
+          </a>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="['header2', 'header3', 'header4']"></tr>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+
+    <mat-paginator #paginator
+                   [length]="dataSource?.data?.length"
+                   [pageIndex]="0"
+                   [pageSize]="50"
+                   [pageSizeOptions]="[25, 50, 100, 250]">
+    </mat-paginator>
+  </div>
+</div>

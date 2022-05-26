@@ -1,0 +1,30 @@
+<mat-form-field class="example-chip-list">
+  <mat-label>{{ 'i18n.TeamAutocompleteComponent.title' | translate }}</mat-label>
+  <mat-chip-list #chipList aria-label="Service selection">
+    <mat-chip
+      *ngFor="let chip of teamsChips"
+      [selectable]="selectable"
+      [removable]="removable"
+      (removed)="remove(chip)">
+      {{chip.name}}
+      <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+    </mat-chip>
+    <input
+      placeholder="{{ 'i18n.TeamAutocompleteComponent.search' | translate }}"
+      #serviceInput
+      [formControl]="servicesCtrl"
+      [matAutocomplete]="auto"
+      [matChipInputFor]="chipList"
+      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+      (matChipInputTokenEnd)="add($event)"
+    >
+    <mat-error *ngIf="mandatory && teamsChips.length === 0">
+      {{ 'i18n.TeamAutocompleteComponent.mandatory' | translate }}
+    </mat-error>
+  </mat-chip-list>
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+    <mat-option *ngFor="let team of filteredTeams | async" [value]="team">
+      {{team}}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

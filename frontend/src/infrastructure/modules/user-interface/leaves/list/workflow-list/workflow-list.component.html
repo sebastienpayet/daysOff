@@ -1,0 +1,17 @@
+<div class="modified-mc-content" *ngIf="users$ | async as users">
+  <mat-accordion multi>
+    <mat-expansion-panel  [ngStyle]="{'z-index':zIndex}" (opened)="zIndex=999" (closed)="zIndex=1" (focusout)="accordion.closeAll()">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ 'i18n.LeaveListComponent.currentStatus' | translate }} :
+          {{'i18n.LeaveStatus.' + leaveWorkflows[0]?.leaveStatus | translate}}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div *ngFor="let leaveWorkflow of leaveWorkflows">
+        {{leaveWorkflow.date | date }} - {{leaveWorkflow.userId | userId:users }} -
+        {{'i18n.LeaveStatus.' + leaveWorkflow.leaveStatus | translate}}
+        <div *ngIf="leaveWorkflow.comment">{{ leaveWorkflow.comment}}</div>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

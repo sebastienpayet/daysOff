@@ -1,0 +1,29 @@
+<mat-form-field class="example-chip-list" *ngIf="filteredStatus | async as statuses">
+  <mat-label>Status</mat-label>
+  <mat-chip-list #chipList aria-label="Status selection">
+    <mat-chip
+      *ngFor="let statusChip of statusChips"
+      [selectable]="selectable"
+      [removable]="removable"
+      (removed)="remove(statusChip)">
+      {{'i18n.LeaveStatus.' + statusChip | translate}}
+      <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+    </mat-chip>
+    <input
+      placeholder="{{('i18n.StatusAutocompleteComponent.searchAStatus' | translate)}}"
+      #statusInput
+      [formControl]="statusCtrl"
+      [matAutocomplete]="auto"
+      [matChipInputFor]="chipList"
+      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+      (matChipInputTokenEnd)="add($event)"
+    >
+    <mat-error
+      *ngIf="mandatory && statusChips.length === 0">{{ 'i18n.StatusAutocompleteComponent.mandatory' | translate }}</mat-error>
+  </mat-chip-list>
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+    <mat-option *ngFor="let status of statuses" [value]="status.translatedStatus">
+      {{ status.translatedStatus }}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
